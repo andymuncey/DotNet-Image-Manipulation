@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Drawing2D;
 
 /// <summary>
@@ -11,7 +12,7 @@ public class ImageResizer
         this.i = i;
     }
 
-    public Image i { get; }
+    private Image i;
 
 
     public Image Resized(int width, int height, bool preserveAspectRatio)
@@ -68,7 +69,6 @@ public class ImageResizer
     /// <summary>
     /// Resizes an image, preserving aspect ratio within the bounds of a max width and height
     /// </summary>
-    /// <param name="i">The image</param>
     /// <param name="MaxWidth">maximum width of resized image</param>
     /// <param name="MaxHeight">maximum height of resized image</param>
     /// <returns>The resized image</returns>
@@ -99,7 +99,14 @@ public class ImageResizer
         return SimpleResize(w, h);
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="left"></param>
+    /// <param name="right"></param>
+    /// <param name="top"></param>
+    /// <param name="bottom"></param>
+    /// <returns></returns>
     public Image Cropped(int left, int right, int top, int bottom)
     {
         return Cropped(new Point(left, top), new Point(i.Width - right, i.Height - bottom));
@@ -117,16 +124,24 @@ public class ImageResizer
 
     }
 
+    /// <summary>
+    /// Returns the image cropped to a square, maintaining the length of the shorted side
+    /// </summary>
+    /// <returns>An Image</returns>
     public Image Square()
     {
         return SquareCropImage();
     }
 
+    /// <summary>
+    /// Returns the image cropped to a square, and resizes to a given dimension
+    /// </summary>
+    /// <param name="sideLength"></param>
+    /// <returns>An image</returns>
     public Image Square(int sideLength)
     {
         return SimpleResize(sideLength, sideLength, SquareCropImage());
     }
-
 
     private Image SquareCropImage()
     {
@@ -154,9 +169,5 @@ public class ImageResizer
         {
             return i;
         }
-
-
     }
-
-
 }
